@@ -1,0 +1,9 @@
+name: Android Build Release Workflow
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
