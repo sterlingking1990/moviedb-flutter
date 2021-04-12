@@ -41,15 +41,20 @@ class MovieAppSinglePageState extends State<MovieAppSinglePage> {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20.0),
                   border: Border.all(width: 1.0, style: BorderStyle.solid)),
-              child: TextField(
-                  controller: TextEditingController(),
-                  decoration: InputDecoration(
-                      hintText: "Search movie by title",
-                      contentPadding: EdgeInsets.all(5.0),
-                      focusColor: Colors.black,
-                      hoverColor: Colors.black,
-                      border: InputBorder.none),
-                  cursorColor: Colors.black)),
+              child:
+                  Stack(alignment: AlignmentDirectional.centerEnd, children: [
+                TextField(
+                    controller: TextEditingController(),
+                    decoration: InputDecoration(
+                        hintText: "Search movie by title",
+                        contentPadding: EdgeInsets.all(5.0),
+                        focusColor: Colors.black,
+                        hoverColor: Colors.black,
+                        border: InputBorder.none),
+                    cursorColor: Colors.black),
+                MaterialButton(
+                    onPressed: null, child: Icon(Icons.search), elevation: 100)
+              ])),
           SizedBox(height: 10.0),
           Expanded(
               child: Container(

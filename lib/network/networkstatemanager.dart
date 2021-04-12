@@ -5,8 +5,8 @@ import 'movierepository.dart';
 
 class NetworkStateManager {
   final MovieApiRepository _repository = MovieApiRepository();
-  final BehaviorSubject<MovieResponse> _subject =
-      BehaviorSubject<MovieResponse>();
+  final PublishSubject<MovieResponse> _subject =
+      PublishSubject<MovieResponse>();
 
   getMovieList() async {
     MovieResponse response = await _repository.getMovieList();
@@ -17,7 +17,7 @@ class NetworkStateManager {
     _subject.close();
   }
 
-  BehaviorSubject<MovieResponse> get subject => _subject.stream;
+  Observable<MovieResponse> get subject => _subject.stream;
 }
 
 final movieState = NetworkStateManager();
