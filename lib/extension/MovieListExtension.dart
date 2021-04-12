@@ -6,16 +6,18 @@ import 'package:moviedb_app/network/networkstatemanager.dart';
 import '../view/mainpage.dart';
 
 extension MovieListing on MovieAppSinglePageState {
+  refreshMovieList(BuildContext context) {
+    movieState.getMovieList();
+  }
+
   Widget movieListExtension(BuildContext context) {
     return StreamBuilder<MovieResponse>(
         stream: movieState.subject,
         builder: (context, AsyncSnapshot<MovieResponse> snapshot) {
           if (snapshot.hasData) {
-            //use the below if the backend actually places an error
-            //field as part of the return even if there was data...
-            // if (snapshot.data.error != null) {
-            //   return _buildErrorWidget(snapshot.data.error);
-            // }
+            if (snapshot.data.error != "") {
+              return _buildErrorWidget(snapshot.data.error);
+            }
             return buildList(snapshot);
           } else if (snapshot.hasError) {
             //this picks error that emanates and not in control of the backend
@@ -64,6 +66,11 @@ extension MovieListing on MovieAppSinglePageState {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text("Error occured: $error"),
+        MaterialButton(
+            onPressed: refreshMovieList(context),
+            color: Colors.amber,
+            elevation: 100,
+            child: Icon(Icons.refresh, color: Colors.amber, size: 50))
       ],
     ));
   }
