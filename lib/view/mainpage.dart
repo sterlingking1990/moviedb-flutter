@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:moviedb_app/extension/MovieListExtension.dart';
+import 'package:moviedb_app/extension/MovieSearchExtension.dart';
 import 'package:moviedb_app/network/networkstatemanager.dart';
 
 void main() => runApp(MovieHomePage());
@@ -26,10 +27,33 @@ class MovieAppSinglePage extends StatefulWidget {
 }
 
 class MovieAppSinglePageState extends State<MovieAppSinglePage> {
+  TextEditingController searchInputController;
+
+  searchMovie() {
+    setState(() {
+      movieState.getMovieFor(searchInputController.text);
+    });
+  }
+
+  searchMov(String text) {
+    setState(() {
+      movieState.getMovieFor(text);
+    });
+  }
+
   @override
   void initState() {
     super.initState();
+    searchInputController = TextEditingController();
     movieState.getMovieList();
+  }
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is removed from the
+    // widget tree.
+    searchInputController.dispose();
+    super.dispose();
   }
 
   @override
@@ -41,20 +65,7 @@ class MovieAppSinglePageState extends State<MovieAppSinglePage> {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20.0),
                   border: Border.all(width: 1.0, style: BorderStyle.solid)),
-              child:
-                  Stack(alignment: AlignmentDirectional.centerEnd, children: [
-                TextField(
-                    controller: TextEditingController(),
-                    decoration: InputDecoration(
-                        hintText: "Search movie by title",
-                        contentPadding: EdgeInsets.all(5.0),
-                        focusColor: Colors.black,
-                        hoverColor: Colors.black,
-                        border: InputBorder.none),
-                    cursorColor: Colors.black),
-                MaterialButton(
-                    onPressed: null, child: Icon(Icons.search), elevation: 100)
-              ])),
+              child: searchExtension(context, searchInputController)),
           SizedBox(height: 10.0),
           Expanded(
               child: Container(

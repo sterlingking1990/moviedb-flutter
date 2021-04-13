@@ -8,4 +8,8 @@ class MovieApiRepository {
   Future<MovieResponse> getMovieList() {
     return _movieApiProvider.getList();
   }
+
+  Future<MovieResponse> getMovieFor(String movieSearch) {
+    return _movieApiProvider.getMovieFor(movieSearch);
+  }
 }
