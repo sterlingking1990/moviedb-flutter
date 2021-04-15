@@ -6,7 +6,7 @@ class Results {
   String originalLanguage;
   String originalTitle;
   String overview;
-  double popularity;
+  int popularity;
   String posterPath;
   String releaseDate;
   String title;
@@ -21,7 +21,6 @@ class Results {
         originalLanguage = json['original_language'],
         originalTitle = json['original_title'],
         overview = json['overview'],
-        popularity = json['popularity'],
         posterPath = json['poster_path'],
         releaseDate = json['release_date'],
         title = json['title'],
@@ -36,7 +35,6 @@ class Results {
         'original_language': this.originalLanguage,
         'original_title': this.originalTitle,
         'overview': this.overview,
-        'popularity': this.popularity,
         'poster_path': this.posterPath,
         'release_date': this.releaseDate,
         'title': this.title,

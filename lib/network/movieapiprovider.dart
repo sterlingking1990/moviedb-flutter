@@ -21,7 +21,6 @@ class MovieApiProvider {
       final String _endpointMovieSearch =
           'https://api.themoviedb.org/3/search/movie?api_key=a4d0ca22a331f15340097bc2c117cf80&query=$movieSearched';
       Response response = await _dio.get(_endpointMovieSearch);
-      print(response.data["results"][0]);
       return MovieResponse.fromJson(response.data);
     } catch (error, stacktrace) {
       print("Exception occured : $error stackTrace:$stacktrace");

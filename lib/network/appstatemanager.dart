@@ -3,7 +3,7 @@ import 'package:rxdart/rxdart.dart';
 
 import 'movierepository.dart';
 
-class NetworkStateManager {
+class AppStateManager {
   final MovieApiRepository _repository = MovieApiRepository();
   final BehaviorSubject<MovieResponse> _movieList =
       BehaviorSubject<MovieResponse>();
@@ -25,4 +25,4 @@ class NetworkStateManager {
   BehaviorSubject<MovieResponse> get movieList => _movieList.stream;
 }
 
-final movieState = NetworkStateManager();
+final movieState = AppStateManager();

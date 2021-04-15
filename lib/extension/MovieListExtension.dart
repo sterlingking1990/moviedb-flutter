@@ -1,11 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:moviedb_app/model/MovieDetailBundle.dart';
 import 'package:moviedb_app/model/MovieResponse.dart';
-import 'package:moviedb_app/network/networkstatemanager.dart';
+import 'package:moviedb_app/model/results.dart';
+import 'package:moviedb_app/network/appstatemanager.dart';
 
+import '../view/MovieDetail.dart';
 import '../view/mainpage.dart';
 
 extension MovieListing on MovieAppSinglePageState {
+  launchMovieDetail(Results result, List<Results> results) async {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            settings: RouteSettings(
+                name: "movieTitle",
+                arguments: MovieDetailBundle(results, result)),
+            builder: (context) => MovieDetail()));
+  }
+
   refreshMovieList(BuildContext context) {
     movieState.getMovieList();
   }
@@ -25,7 +38,7 @@ extension MovieListing on MovieAppSinglePageState {
               //i.e the network error
               return _buildErrorWidget(snapshot.error.toString());
             } else {
-              return _buildLoadingWidget();
+              return buildLoadingWidget();
             }
           });
     } catch (error) {
@@ -45,10 +58,16 @@ extension MovieListing on MovieAppSinglePageState {
                       margin: EdgeInsets.all(5),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(25.0)),
-                      child: Image.network(
-                          "https://image.tmdb.org/t/p/w500/" +
-                              snapshots.data.results[i].backdropPath,
-                          fit: BoxFit.cover)),
+                      child: InkWell(
+                          onTap: () {
+                            launchMovieDetail(snapshots.data.results[i],
+                                snapshots.data.results);
+                          },
+                          child: Image.network(
+                            "https://image.tmdb.org/t/p/w500/" +
+                                snapshots.data.results[i].backdropPath,
+                            fit: BoxFit.cover,
+                          ))),
                   Text(
                     snapshots.data.results[i].title,
                     style: TextStyle(
@@ -83,7 +102,7 @@ extension MovieListing on MovieAppSinglePageState {
     ));
   }
 
-  Widget _buildLoadingWidget() => Center(
+  Widget buildLoadingWidget() => Center(
         child: Column(
           children: [
             Text("Loading data from API..."),

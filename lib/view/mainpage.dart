@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:moviedb_app/extension/MovieListExtension.dart';
 import 'package:moviedb_app/extension/MovieSearchExtension.dart';
-import 'package:moviedb_app/network/networkstatemanager.dart';
+import 'package:moviedb_app/network/appstatemanager.dart';
 
 void main() => runApp(MovieHomePage());
 
@@ -42,10 +42,18 @@ class MovieAppSinglePageState extends State<MovieAppSinglePage> {
   }
 
   @override
+  void setState(fn) {
+    // TODO: implement setState
+    movieState.getMovieList();
+    super.setState(fn);
+  }
+
+  @override
   void initState() {
     super.initState();
     searchInputController = TextEditingController();
     movieState.getMovieList();
+    // movieState.getMovieList();
   }
 
   @override
